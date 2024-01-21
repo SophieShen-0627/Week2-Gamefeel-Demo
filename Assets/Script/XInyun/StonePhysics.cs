@@ -8,9 +8,14 @@ public class StonePhysics : MonoBehaviour
     [SerializeField] float MassScale = 1;
     [SerializeField] ParticleSystem Water;
     [SerializeField] float WaterSpeedScale = 2;
+    [SerializeField] AudioClip Skipping;
+    [SerializeField] AudioClip dropping;
+    [SerializeField] Vector2 AudioPitchRange = new Vector2(0.9f, 1.1f);
+   
 
     private MouseController m_controller;
     private Rigidbody2D m_rigidbody;
+    private AudioSource Audio;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,6 +23,7 @@ public class StonePhysics : MonoBehaviour
         m_rigidbody = GetComponent<Rigidbody2D>();
         m_rigidbody.isKinematic = true;
 
+        Audio = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -49,6 +55,13 @@ public class StonePhysics : MonoBehaviour
         main.startSpeed = m_rigidbody.velocity.magnitude * WaterSpeedScale;
         water.Play();
     }
+
+    private void playAudio(AudioClip clip)
+    {
+        float randomPitch = Random.Range(AudioPitchRange.x, AudioPitchRange.y);
+        Audio.pitch = randomPitch;
+        Audio.PlayOneShot(clip);
+    }
     private void CalculateVerticalVelocity()
     {
         //the width of the stone
@@ -73,6 +86,7 @@ public class StonePhysics : MonoBehaviour
 
         if (force.y >= MassScale * 9.8)
         {
+            playAudio(Skipping);
             float ContactTime = 2 * m_rigidbody.velocity.y / (float)(Mathf.Abs(force.y) * MassScale - 9.8);
 
             float xVelocity = m_rigidbody.velocity.x - MassScale * ContactTime * Mathf.Abs(force.x);
@@ -82,6 +96,7 @@ public class StonePhysics : MonoBehaviour
         }
         else
         {
+            playAudio(dropping);
             m_rigidbody.AddForce(force * MassScale);
         }
 

@@ -14,11 +14,6 @@ public class MouseController : MonoBehaviour
     [SerializeField] private Vector3 mouseInitialPosition;
     [SerializeField] private Vector3 mouseFinalPostion;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()
@@ -32,7 +27,12 @@ public class MouseController : MonoBehaviour
         if (StartRecordingMousePostion)
         {
             if (Input.mousePosition != mouseInitialPosition)
-                transform.right = Input.mousePosition - mouseInitialPosition;
+            {
+                Vector3 mousePosInWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                Vector3 Temp = mousePosInWorld - transform.position;
+                transform.right = new Vector3(Temp.x, Temp.y, 0).normalized;
+            }
+
         }
 
         if (Input.GetMouseButtonUp(0))
@@ -40,7 +40,7 @@ public class MouseController : MonoBehaviour
             StartRecordingMousePostion = false;
             mouseFinalPostion = Input.mousePosition;
             InitialSpeed = Vector3.Distance(mouseFinalPostion ,mouseInitialPosition) * SpeedParameter;
-            InitialDirection = (mouseFinalPostion - mouseInitialPosition).normalized;
+            InitialDirection = transform.right.normalized;
             Released = true;
         }
     }
