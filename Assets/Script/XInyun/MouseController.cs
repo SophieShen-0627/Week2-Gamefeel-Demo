@@ -8,6 +8,7 @@ public class MouseController : MonoBehaviour
     public Vector2 InitialDirection = new Vector2(0,0);
     public bool Released = false;
 
+    [SerializeField] private float MaxSpeed = 7.5f;
     [SerializeField] private float SpeedParameter = 1;
 
     [SerializeField] private bool StartRecordingMousePostion = false;
@@ -40,6 +41,7 @@ public class MouseController : MonoBehaviour
             StartRecordingMousePostion = false;
             mouseFinalPostion = Input.mousePosition;
             InitialSpeed = Vector3.Distance(mouseFinalPostion ,mouseInitialPosition) * SpeedParameter;
+            if (InitialSpeed >= MaxSpeed) InitialSpeed = MaxSpeed;
             InitialDirection = transform.right.normalized;
             Released = true;
         }
