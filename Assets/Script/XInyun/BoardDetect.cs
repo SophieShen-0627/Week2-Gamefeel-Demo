@@ -11,6 +11,7 @@ public class BoardDetect : MonoBehaviour
     public float LoadDelay = .7f;
      private AudioSource source;
     [SerializeField] AudioClip Fail;
+    [SerializeField] ParticleSystem explode;
 
     private void Start()
     {
@@ -23,7 +24,7 @@ public class BoardDetect : MonoBehaviour
     {
         if (SceneComplete)
         {
-            loadScene(SceneNum++);
+            loadScene(SceneNum + 1);
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
@@ -31,14 +32,23 @@ public class BoardDetect : MonoBehaviour
         if (collision.gameObject.GetComponent<StonePhysics>())
         {
             collision.gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
-            source.PlayOneShot(Fail);
+            collision.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
 
-            loadScene(SceneNum);
+            RestartGame();
         }
+    }
+
+    public void RestartGame()
+    {
+        explode.Play();
+        source.PlayOneShot(Fail);
+
+        loadScene(SceneNum);
     }
 
     private void loadScene(int sceneNum)
     {
         TransitionManager.Instance().Transition(sceneNum, transition, LoadDelay);
+        SceneComplete = false;
     }
 }

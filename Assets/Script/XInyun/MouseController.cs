@@ -8,10 +8,10 @@ public class MouseController : MonoBehaviour
     public Vector2 InitialDirection = new Vector2(0,0);
     public bool Released = false;
 
-    [SerializeField] private float MaxSpeed = 7.5f;
+    public  float MaxSpeed = 7.5f;
     [SerializeField] private float SpeedParameter = 1;
 
-    [SerializeField] private bool StartRecordingMousePostion = false;
+    public bool StartRecordingMousePostion = false;
     [SerializeField] private Vector3 mouseInitialPosition;
     [SerializeField] private Vector3 mouseFinalPostion;
 
@@ -32,6 +32,13 @@ public class MouseController : MonoBehaviour
                 Vector3 mousePosInWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 Vector3 Temp = mousePosInWorld - transform.position;
                 transform.right = new Vector3(Temp.x, Temp.y, 0).normalized;
+
+                mouseFinalPostion = Input.mousePosition;
+
+                if (Vector3.Distance(mouseFinalPostion, mouseInitialPosition) * SpeedParameter >= MaxSpeed) InitialSpeed = MaxSpeed;
+                else InitialSpeed = Vector3.Distance(mouseFinalPostion, mouseInitialPosition) * SpeedParameter;
+
+                InitialDirection = transform.right.normalized;
             }
 
         }
@@ -39,10 +46,7 @@ public class MouseController : MonoBehaviour
         if (Input.GetMouseButtonUp(0))
         {
             StartRecordingMousePostion = false;
-            mouseFinalPostion = Input.mousePosition;
-            InitialSpeed = Vector3.Distance(mouseFinalPostion ,mouseInitialPosition) * SpeedParameter;
-            if (InitialSpeed >= MaxSpeed) InitialSpeed = MaxSpeed;
-            InitialDirection = transform.right.normalized;
+
             Released = true;
         }
     }
