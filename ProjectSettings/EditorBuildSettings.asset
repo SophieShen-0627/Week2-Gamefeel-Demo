@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/TestSceneforWater/Level1.unity
     guid: 4681ccb87869e954fb9bf2c3616a1661
   - enabled: 1
+    path: Assets/Scenes/TestSceneforWater/Level2_1.unity
+    guid: 0446107722ac1064c88ce7ca3ff0d1a6
+  - enabled: 1
     path: Assets/Scenes/TestSceneforWater/Level2.unity
     guid: ff0c5f474cd727e42ab3730b28aab8e1
   - enabled: 1
