@@ -199,7 +199,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BounceScale: 0.07
   MassScale: 0.1
-  WaterDragScale: 10
+  WaterDragScale: 5
   Water: {fileID: 7971788151897236260, guid: f625c8ce964be8549b64aa9d64689778, type: 3}
   WaterSpeedScale: 3
   Skipping: {fileID: 8300000, guid: 7b862b22fe9de0346824cf9914bdff16, type: 3}
@@ -428,7 +428,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c39a049bdc75ff1438a3b2a571600766, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LineLengthScale: 0.2
+  LineLengthScale: 0.3
   LineOffset: 0.4
 --- !u!1 &8769599570325280977
 GameObject:
